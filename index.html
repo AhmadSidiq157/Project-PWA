@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Daftar Tugas PWA</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="manifest" href="manifest.json" />
+    <meta name="theme-color" content="#1f1f1f" />
+  </head>
+  <body>
+    <header>
+      <h1>Daftar Tugas</h1>
+      <button id="themeToggle" class="theme-toggle">Ganti Tema</button>
+      <button id="installBtn" class="install-button">Instal Aplikasi</button>
+    </header>
+
+    <main>
+      <section class="task-input-section">
+        <input type="text" id="taskInput" placeholder="Tambahkan tugas baru" />
+        <select id="categorySelect">
+          <option value="umum">Umum</option>
+          <option value="pekerjaan">Pekerjaan</option>
+          <option value="pribadi">Pribadi</option>
+          <option value="belanja">Belanja</option>
+          <option value="lain-lain">Lain-lain</option>
+        </select>
+        <button id="addTaskBtn">Tambah Tugas</button>
+      </section>
+
+      <section class="filter-section">
+        <label for="filterCategory">Filter Kategori:</label>
+        <select id="filterCategory">
+          <option value="all">Semua</option>
+          <option value="umum">Umum</option>
+          <option value="pekerjaan">Pekerjaan</option>
+          <option value="pribadi">Pribadi</option>
+          <option value="belanja">Belanja</option>
+          <option value="lain-lain">Lain-lain</option>
+        </select>
+      </section>
+
+      <section class="task-list-section">
+        <ul id="taskList"></ul>
+      </section>
+    </main>
+
+    <footer>
+      <p>&copy; 2025 Daftar Tugas PWA</p>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>
