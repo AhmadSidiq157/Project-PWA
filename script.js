@@ -8,6 +8,7 @@ const addTaskBtn = document.getElementById("addTaskBtn");
 const taskList = document.getElementById("taskList");
 const filterCategorySelect = document.getElementById("filterCategory");
 const installBtn = document.getElementById("installBtn");
+const themeToggle = document.getElementById("themeToggle");
 
 // Data Tugas
 let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
@@ -29,15 +30,35 @@ function renderTasks() {
       li.dataset.id = index;
 
       li.innerHTML = `
-        <span class="task-text">${task.text}</span>
-        <span class="category-badge">${task.category}</span>
-        <div class="task-actions">
-          <button class="complete-btn">${
-            task.completed ? "Batal" : "Selesai"
-          }</button>
-          <button class="delete-btn">Hapus</button>
+        <div class="task-content">
+          <input 
+            type="checkbox" 
+            ${task.completed ? "checked" : ""} 
+            class="task-checkbox"
+          >
+          <span class="task-text">${task.text}</span>
+        </div>
+        <div class="task-right">
+          <span class="category-badge ${task.category}">${task.category}</span>
+          <button class="delete-btn" title="Hapus tugas">🗑️</button>
         </div>
       `;
+
+      // Event listeners
+      li.querySelector(".task-checkbox").addEventListener("change", () => {
+        tasks[index].completed = !tasks[index].completed;
+        saveTasks();
+        renderTasks();
+      });
+
+      li.querySelector(".delete-btn").addEventListener("click", () => {
+        if (confirm("Hapus tugas ini?")) {
+          tasks.splice(index, 1);
+          saveTasks();
+          renderTasks();
+        }
+      });
+
       taskList.appendChild(li);
     }
   });
@@ -49,29 +70,15 @@ addTaskBtn.addEventListener("click", () => {
   const category = categorySelect.value;
 
   if (text) {
-    tasks.push({ text, category, completed: false });
+    tasks.push({
+      text,
+      category,
+      completed: false,
+      createdAt: new Date().toISOString(),
+    });
     taskInput.value = "";
     saveTasks();
     renderTasks();
-  }
-});
-
-taskList.addEventListener("click", (e) => {
-  const li = e.target.closest("li");
-  if (!li) return;
-
-  const index = parseInt(li.dataset.id);
-
-  if (e.target.classList.contains("complete-btn")) {
-    tasks[index].completed = !tasks[index].completed;
-    saveTasks();
-    renderTasks();
-  } else if (e.target.classList.contains("delete-btn")) {
-    if (confirm("Hapus tugas ini?")) {
-      tasks.splice(index, 1);
-      saveTasks();
-      renderTasks();
-    }
   }
 });
 
@@ -82,16 +89,16 @@ window.addEventListener("beforeinstallprompt", (e) => {
   e.preventDefault();
   deferredPrompt = e;
   installBtn.style.display = "block";
-  console.log("PWA siap diinstal!");
 });
 
 installBtn.addEventListener("click", async () => {
-  if (!deferredPrompt) return;
-  deferredPrompt.prompt();
-  const { outcome } = await deferredPrompt.userChoice;
-  console.log("Hasil instalasi:", outcome);
-  deferredPrompt = null;
-  installBtn.style.display = "none";
+  if (deferredPrompt) {
+    deferredPrompt.prompt();
+    const { outcome } = await deferredPrompt.userChoice;
+    console.log("Hasil instalasi:", outcome);
+    deferredPrompt = null;
+    installBtn.style.display = "none";
+  }
 });
 
 window.addEventListener("appinstalled", () => {
@@ -99,7 +106,24 @@ window.addEventListener("appinstalled", () => {
   installBtn.style.display = "none";
 });
 
+// Toggle Tema
+themeToggle.addEventListener("click", () => {
+  document.body.classList.toggle("light-theme");
+  themeToggle.textContent = document.body.classList.contains("light-theme")
+    ? "Tema Gelap"
+    : "Tema Terang";
+  localStorage.setItem(
+    "theme",
+    document.body.classList.contains("light-theme") ? "light" : "dark"
+  );
+});
+
 // Inisialisasi
+if (localStorage.getItem("theme") === "light") {
+  document.body.classList.add("light-theme");
+  themeToggle.textContent = "Tema Gelap";
+}
+
 renderTasks();
 
 // Service Worker Registration
@@ -111,11 +135,3 @@ if ("serviceWorker" in navigator) {
       .catch((err) => console.error("Gagal mendaftar Service Worker:", err));
   });
 }
-const themeToggle = document.getElementById("themeToggle");
-
-themeToggle.addEventListener("click", () => {
-  document.body.classList.toggle("light-theme");
-  themeToggle.textContent = document.body.classList.contains("light-theme")
-    ? "Tema Gelap"
-    : "Tema Terang";
-});
