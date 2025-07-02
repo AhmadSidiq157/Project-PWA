@@ -4,6 +4,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Daftar Tugas PWA</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
     <link rel="stylesheet" href="style.css" />
     <link rel="manifest" href="manifest.json" />
     <meta name="theme-color" content="#1f1f1f" />
@@ -11,8 +15,16 @@
   <body>
     <header>
       <h1>Daftar Tugas</h1>
-      <button id="themeToggle" class="theme-toggle">Ganti Tema</button>
-      <button id="installBtn" class="install-button">Instal Aplikasi</button>
+      <button id="themeToggle" class="theme-toggle" aria-label="Ganti tema">
+        <i class="fas fa-moon"></i>
+      </button>
+      <button
+        id="installBtn"
+        class="install-button"
+        aria-label="Instal aplikasi"
+      >
+        <i class="fas fa-download"></i>
+      </button>
     </header>
 
     <main>
@@ -25,7 +37,10 @@
           <option value="belanja">Belanja</option>
           <option value="lain-lain">Lain-lain</option>
         </select>
-        <button id="addTaskBtn">Tambah Tugas</button>
+        <button id="addTaskBtn" aria-label="Tambah tugas">
+          <i class="fas fa-plus"></i>
+          <span class="button-text">Tambah</span>
+        </button>
       </section>
 
       <section class="filter-section">

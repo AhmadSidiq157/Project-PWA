@@ -54,7 +54,7 @@ body {
 header {
   background-color: var(--header-color);
   color: #fff;
-  padding: 1.5rem;
+  padding: 1rem;
   text-align: center;
   position: relative;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
@@ -62,60 +62,87 @@ header {
 
 h1 {
   margin: 0;
-  font-size: 2rem;
+  font-size: 1.5rem;
+  padding: 0 50px;
 }
 
 /* === THEME TOGGLE BUTTON === */
 .theme-toggle {
   position: absolute;
   top: 50%;
-  left: 20px;
+  left: 10px;
   transform: translateY(-50%);
-  background-color: var(--input-bg-color);
-  color: var(--text-color);
-  border: 2px solid var(--input-border-color);
-  padding: 8px 16px;
-  border-radius: 30px;
+  background-color: transparent;
+  border: none;
+  color: white;
+  font-size: 1rem;
   cursor: pointer;
-  font-size: 0.9rem;
-  font-weight: bold;
+  padding: 8px;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   transition: all 0.3s ease;
 }
 
 .theme-toggle:hover {
-  background-color: var(--button-bg-color);
-  color: white;
+  background-color: rgba(255, 255, 255, 0.2);
 }
 
 /* === INSTALL BUTTON === */
 .install-button {
   position: absolute;
   top: 50%;
-  right: 20px;
+  right: 10px;
   transform: translateY(-50%);
-  background-color: var(--input-bg-color);
-  color: var(--text-color);
-  border: 2px solid var(--input-border-color);
-  padding: 8px 16px;
-  border-radius: 30px;
+  background-color: transparent;
+  border: none;
+  color: white;
+  font-size: 1rem;
   cursor: pointer;
-  font-size: 0.9rem;
-  font-weight: bold;
+  padding: 8px;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
   display: none;
+  align-items: center;
+  justify-content: center;
   transition: all 0.3s ease;
 }
 
 .install-button:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Button with icon and text */
+button:not(.install-button):not(.theme-toggle):not(.delete-btn) {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
   background-color: var(--button-bg-color);
   color: white;
+  border: none;
+  padding: 12px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s;
+  min-width: 50px;
+}
+
+.button-text {
+  display: inline;
 }
 
 /* === MAIN CONTENT === */
 main {
   flex-grow: 1;
-  padding: 25px;
+  padding: 20px;
   max-width: 800px;
-  margin: 30px auto;
+  margin: 20px auto;
   width: 95%;
   background-color: var(--main-bg-color);
   border-radius: 10px;
@@ -126,7 +153,7 @@ main {
 .task-input-section {
   display: flex;
   gap: 10px;
-  margin-bottom: 25px;
+  margin-bottom: 20px;
   flex-wrap: wrap;
 }
 
@@ -136,7 +163,7 @@ main {
 
 #taskInput,
 select {
-  padding: 14px;
+  padding: 12px;
   border: 1px solid var(--input-border-color);
   border-radius: 6px;
   font-size: 1rem;
@@ -150,18 +177,7 @@ select:focus {
   outline: none;
 }
 
-button:not(.install-button):not(.theme-toggle) {
-  background-color: var(--button-bg-color);
-  color: white;
-  border: none;
-  padding: 14px;
-  border-radius: 6px;
-  cursor: pointer;
-  font-weight: bold;
-  transition: background-color 0.3s;
-}
-
-button:hover:not(.install-button):not(.theme-toggle) {
+button:hover:not(.install-button):not(.theme-toggle):not(.delete-btn) {
   background-color: var(--button-hover-color);
 }
 
@@ -170,7 +186,7 @@ button:hover:not(.install-button):not(.theme-toggle) {
   display: flex;
   align-items: center;
   gap: 10px;
-  margin-bottom: 25px;
+  margin-bottom: 20px;
   flex-wrap: wrap;
 }
 
@@ -181,7 +197,7 @@ button:hover:not(.install-button):not(.theme-toggle) {
 
 /* === TASK LIST === */
 .task-list-section {
-  margin-top: 30px;
+  margin-top: 20px;
 }
 
 #taskList {
@@ -193,7 +209,7 @@ button:hover:not(.install-button):not(.theme-toggle) {
 li {
   background-color: var(--list-item-bg);
   padding: 12px 15px;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
   border-radius: 8px;
   display: flex;
   justify-content: space-between;
@@ -224,7 +240,7 @@ li {
 .task-right {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
 }
 
 .category-badge {
@@ -236,19 +252,24 @@ li {
   color: var(--badge-text);
 }
 
+/* Task item delete button */
 .delete-btn {
   background: none;
   border: none;
   color: #ff6b6b;
   cursor: pointer;
-  font-size: 1.2rem;
-  padding: 0 5px;
+  font-size: 1rem;
+  padding: 5px;
   display: flex;
   align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
 }
 
 .delete-btn:hover {
-  color: #ff4444;
+  background-color: rgba(255, 107, 107, 0.1);
 }
 
 .completed .task-text {
@@ -267,49 +288,54 @@ footer {
 
 /* === CATEGORY COLORS === */
 .umum {
-  background-color: #e3f2fd;
-  color: #1565c0;
-}
-.pekerjaan {
-  background-color: #e8f5e9;
-  color: #2e7d32;
-}
-.pribadi {
-  background-color: #f3e5f5;
-  color: #7b1fa2;
-}
-.belanja {
-  background-color: #fff3e0;
-  color: #e65100;
-}
-.lain-lain {
-  background-color: #f5f5f5;
-  color: #616161;
-}
-
-.dark-theme .umum {
   background-color: #0d47a1;
   color: white;
 }
-.dark-theme .pekerjaan {
+.pekerjaan {
   background-color: #1b5e20;
   color: white;
 }
-.dark-theme .pribadi {
+.pribadi {
   background-color: #4a148c;
   color: white;
 }
-.dark-theme .belanja {
+.belanja {
   background-color: #e65100;
   color: white;
 }
-.dark-theme .lain-lain {
+.lain-lain {
   background-color: #424242;
   color: white;
 }
 
 /* === RESPONSIVE === */
 @media (max-width: 600px) {
+  /* Hide button text on small screens */
+  .button-text {
+    display: none;
+  }
+
+  /* Make buttons more touch-friendly */
+  button:not(.install-button):not(.theme-toggle):not(.delete-btn) {
+    padding: 14px;
+  }
+
+  /* Stack input section vertically */
+  .task-input-section {
+    flex-direction: column;
+  }
+
+  .task-input-section > * {
+    width: 100%;
+  }
+
+  /* Adjust filter section */
+  .filter-section {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  /* Adjust task item layout */
   .task-content {
     flex-direction: column;
     align-items: flex-start;
@@ -319,5 +345,6 @@ footer {
   .task-right {
     width: 100%;
     justify-content: space-between;
+    margin-top: 8px;
   }
 }

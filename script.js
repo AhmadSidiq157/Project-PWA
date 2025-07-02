@@ -9,6 +9,9 @@ const taskList = document.getElementById("taskList");
 const filterCategorySelect = document.getElementById("filterCategory");
 const installBtn = document.getElementById("installBtn");
 const themeToggle = document.getElementById("themeToggle");
+const themeIcon = document.createElement("i");
+themeIcon.classList.add("fas", "fa-theme-icon");
+themeToggle.appendChild(themeIcon);
 
 // Data Tugas
 let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
@@ -106,24 +109,32 @@ window.addEventListener("appinstalled", () => {
   installBtn.style.display = "none";
 });
 
+// Fungsi Update Icon Tema
+function updateThemeIcon() {
+  if (document.body.classList.contains("light-theme")) {
+    themeIcon.classList.remove("fa-moon");
+    themeIcon.classList.add("fa-sun");
+  } else {
+    themeIcon.classList.remove("fa-sun");
+    themeIcon.classList.add("fa-moon");
+  }
+}
+
 // Toggle Tema
 themeToggle.addEventListener("click", () => {
   document.body.classList.toggle("light-theme");
-  themeToggle.textContent = document.body.classList.contains("light-theme")
-    ? "Tema Gelap"
-    : "Tema Terang";
   localStorage.setItem(
     "theme",
     document.body.classList.contains("light-theme") ? "light" : "dark"
   );
+  updateThemeIcon();
 });
 
 // Inisialisasi
 if (localStorage.getItem("theme") === "light") {
   document.body.classList.add("light-theme");
-  themeToggle.textContent = "Tema Gelap";
 }
-
+updateThemeIcon();
 renderTasks();
 
 // Service Worker Registration
